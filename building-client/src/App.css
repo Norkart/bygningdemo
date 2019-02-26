@@ -18,7 +18,11 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.contentWrapper{
+  width: 100vw;
+  height: 100vh;
+  background-color: blanchedalmond;
+}
 .App-link {
   color: #61dafb;
 }
