@@ -9,11 +9,11 @@ export const serchApiService ={
 
 async GetAdress (searchTerm){
         let headers = {Accept: 'application/json; charset=utf-8',
-        'X-WAAPI-Toke': searchKey
+        'X-WAAPI-Token': searchKey
     };
          console.log(BASE_URL);
         let client = createNewClient(headers);
-        return client.get(resource+'?Query='+ encodeURIComponent(searchTerm) + "&Targets=gateadresse&api_key="+searchKey);
+        return client.get(resource+'?Query='+ encodeURIComponent(searchTerm) + "&Targets=gateadresse");
     },
    
 };
