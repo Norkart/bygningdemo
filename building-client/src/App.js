@@ -4,13 +4,17 @@ import MainContent from './components/MainContent';
 import './App.css';
 import FeatureComponent from './FeatureComponent';
 import Sidebar from './components/Sidebar';
+import Header from './components/Header';
+import Footer from './components/Footer';
 class App extends Component {
   render() {
     return (
       <div className="App">
        <ContentWrapper>
-          <Sidebar></Sidebar>
-          <MainContent></MainContent>
+       <Header></Header>   
+       <Sidebar></Sidebar>
+       <MainContent></MainContent>
+       <Footer></Footer>
        </ContentWrapper>
       </div>
     );
