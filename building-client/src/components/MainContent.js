@@ -5,13 +5,14 @@ class MainContent extends Component{
     constructor() {
         super();
         this.state={data:null};
-        
+        this.getData = this.getData.bind(this);
     }
-    getData(e){
+    async getData(e){
         let searchTerm = e.target.value;
         console.log(e.target.value);
-        debugger;
-        serchApiService.GetAdress(searchTerm);
+        let res = await serchApiService.GetAdress(searchTerm);
+        console.log(res.data);
+        this.setState({data:res.data});
     }
     render(){
         return (<main>
@@ -21,7 +22,7 @@ class MainContent extends Component{
           className="searchBox" onChange={this.getData}></input>
            
             <div className="result">
-            Result:{this.state.data && this.state.data}
+            Result:{this.state.data && JSON.stringify(this.state.data)}
             </div>
             </main>);
     }

@@ -1,19 +1,19 @@
 import Axios from 'axios';
 import getSetting from './getSetting';
-const BASE_URL = getSetting('REACT_APP_SEARCH_BASE_URL');
-const searchKey = getSetting('REACT_APP_SEARCH_API_KEY');
-const resource = getSetting('REACT_APP_SEARCH_SEARCH');
+const BASE_URL = getSetting('REACT_APP_SEARCH_BASE_URL') || '//www.webatlas.no/WAAPI-FritekstSok/';
+const searchKey = getSetting('REACT_APP_SEARCH_API_KEY') || '07C4A129-9D26-4B3D-9BC8-B22E4B6E509E';
+const resource = getSetting('REACT_APP_SEARCH_SEARCH') || 'suggest/kommunecustom';
 
 
 export const serchApiService ={
 
 async GetAdress (searchTerm){
         let headers = {Accept: 'application/json; charset=utf-8',
-                    'X-WAAPI-Profile': searchKey};
+        'X-WAAPI-Toke': searchKey
+    };
          console.log(BASE_URL);
         let client = createNewClient(headers);
-        debugger;
-        return client.get(resource+'?Query='+ encodeURIComponent(searchTerm));
+        return client.get(resource+'?Query='+ encodeURIComponent(searchTerm) + "&Targets=gateadresse&api_key="+searchKey);
     },
    
 };
