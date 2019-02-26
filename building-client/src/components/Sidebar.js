@@ -7,7 +7,7 @@ class Sidebar extends Component{
     }
 
     render(){
-        return (<div></div>);
+        return (<div className="sideBar"></div>);
     }
 
 }

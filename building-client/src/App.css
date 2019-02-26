@@ -18,6 +18,10 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.sideBar{
+  border: 1px solid red;
+  
+}
 .contentWrapper{
   width: 100vw;
   height: 100vh;
