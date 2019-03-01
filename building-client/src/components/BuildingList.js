@@ -47,6 +47,7 @@ class BuildingList extends Component{
         </React.Fragment>
     }
     createDetailRow2(details){
+        const byggAreal= details.ByggAreal;
         return <React.Fragment>
             <div>ID:</div><div>{details.Id}</div>
             <div>Bygningsnummer:</div><div>{details.Bygningsnummer}</div>
@@ -54,19 +55,29 @@ class BuildingList extends Component{
             <div>Bygningstype:</div><div>{details.MatrikkelData.Bygningstype}</div>
             <div>Harheis:</div><div>{details.MatrikkelData.Harheis}</div>
             <div>Naringsgruppe:</div><div>{details.MatrikkelData.Naringsgruppe}</div>
-            <div>AntallEtasjer:</div><div>{details.ByggAreal.AntallEtasjer}</div>
-            <div>Areal2D:</div><div>{details.ByggAreal.Areal2D}</div>
-            <div>Areal3D:</div><div>{details.ByggAreal.Areal3D}</div>
-            <div>ArealVegg:</div><div>{details.ByggAreal.ArealVegg}</div>
-            <div>Bygningsnummer:</div><div>{details.ByggAreal.Bygningsnummer}</div>
-            <div>HelningMax:</div><div>{details.ByggAreal.HelningMax}</div>
-            <div>HelningMiddel:</div><div>{details.ByggAreal.HelningMiddel}</div>
-            <div>HoydeVeggMax:</div><div>{details.ByggAreal.HoydeVeggMax}</div>
-            <div>HoydeVeggMiddel:</div><div>{details.ByggAreal.HoydeVeggMiddel}</div>
-            <div>Taktype:</div><div>{details.ByggAreal.Taktype}</div>
-            <div>VerandaAntall:</div><div>{details.ByggAreal.VerandaAntall}</div>
-            <div>VerandaAreal:</div><div>{details.ByggAreal.VerandaAreal}</div>
+            {byggAreal && this.addBuildingArea(byggAreal)}
+          
         </React.Fragment>
+    }
+    addBuildingArea(byggAreal){
+        return <React.Fragment>
+        {
+            this.addAllValues(byggAreal)
+            /*this.addValue('AntallEtasjer:', byggAreal.AntallEtasjer)*/
+        }
+        </React.Fragment>
+    }
+    addAllValues(obj){
+        let keys=Object.keys(obj);
+        var htmlList =[];
+        for (let index = 0; index < keys.length; index++) {
+            const key = keys[index];
+            htmlList.push(this.addValue(key,obj[key]));
+        }
+        return htmlList;
+    }
+    addValue(label,value){
+        return <React.Fragment><div>{label}</div><div>{value!=null ? value : "Ingen verdi"}</div></React.Fragment>
     }
     createDetailRow(propName, value, index){
         if(!(Object.getPrototypeOf( value ) === Object.prototype))
