@@ -2,7 +2,7 @@ import Axios from 'axios';
 import getSetting from './getSetting';
 const BASE_URL = getSetting('REACT_APP_SEARCH_BASE_URL') || '//www.webatlas.no/WAAPI-FritekstSok/';
 const searchKey = getSetting('REACT_APP_SEARCH_API_KEY') || '4fd09bea-7647-427e-9004-1f170763ecbf';
-const resource = getSetting('REACT_APP_SEARCH_SEARCH') || 'search/custom';
+const resource = getSetting('REACT_APP_SEARCH_SEARCH') || 'search/matrikkel/adresse/gateadresse';
 
 
 export const serchApiService ={
@@ -13,7 +13,8 @@ async GetAdress (searchTerm){
     };
         console.log(BASE_URL);
         let client = createNewClient(headers);
-        let res = await client.get(resource+'?Query='+ encodeURIComponent(searchTerm) + "&Targets=gateadresse");
+        
+        let res = await client.get(resource+'?Query='+ encodeURIComponent(searchTerm));
         return res;
     },
     async GetBuilding (address){
@@ -22,7 +23,7 @@ async GetAdress (searchTerm){
     };
         console.log(BASE_URL);
         let client = createNewClient(headers);
-        let res = await client.get(resource+'?Query='+ encodeURIComponent(address) + "&Targets=gateadresse");
+        let res = await client.get(resource+'?Query='+ encodeURIComponent(address));
         return res;
     },
    
