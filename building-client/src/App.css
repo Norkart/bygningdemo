@@ -1,3 +1,14 @@
+:root {
+  --dark-grey: #4d4d4d;
+--norkart-sort: #2e2d30;
+--norkart-gronn: #51a026;
+--norkart-bla: #87a8e0;
+--norkart-orange: #f5ad4a;
+--norkart-hvit: #f6f6f6;
+--navbar-height: 58px;
+--header-background-height: 65vh;
+--footer-height: 60px;
+}
 .App {
   text-align: center;
   height: 100%;
@@ -10,7 +21,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--norkart-hvit);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -31,6 +42,9 @@
   border: 1px solid red;
   
 }
+h1,p{
+  color:var(--norkart-sort);
+}
 .footer{
   border: 1px solid red;
   grid-area: footer;
@@ -38,7 +52,7 @@
 .contentWrapper{
   width: 100vw;
   height: 100vh;
-  background-color: blanchedalmond;
+  background-color:#f6f6f6;
   display: grid;
   grid-template-rows: 1fr 4fr 1fr;
   grid-template-columns: 1fr 3fr;
@@ -74,6 +88,9 @@
 }
 .building{
   border:1px solid red;
+}
+#norkartlogo{
+  width: 200px;
 }
 .infoHeader{
   align-content: center
