@@ -46,6 +46,19 @@ class BuildingList extends Component{
     }
     createDetailRow2(details){
         debugger;
+        /*ByggAreal:
+AntallEtasjer: 3
+Areal2D: 0
+Areal3D: 0
+ArealVegg: 0
+Bygningsnummer: "152913052"
+HelningMax: 0
+HelningMiddel: 0
+HoydeVeggMax: 0
+HoydeVeggMiddel: 0
+Taktype: "Saltak"
+VerandaAntall: 1
+VerandaAreal: 13.81*/
         return <React.Fragment>
             <div>ID:</div><div>{details.Id}</div>
             <div>Bygningsnummer:</div><div>{details.Bygningsnummer}</div>
