@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import getSetting from './getSetting';
 const BASE_URL = getSetting('REACT_APP_SEARCH_BASE_URL') || '//www.webatlas.no/WAAPI-FritekstSok/';
-const searchKey = getSetting('REACT_APP_SEARCH_API_KEY') || '07C4A129-9D26-4B3D-9BC8-B22E4B6E509E';
+const searchKey = getSetting('REACT_APP_SEARCH_API_KEY') || '4fd09bea-7647-427e-9004-1f170763ecbf';
 const resource = getSetting('REACT_APP_SEARCH_SEARCH') || 'search/custom';
 
 
