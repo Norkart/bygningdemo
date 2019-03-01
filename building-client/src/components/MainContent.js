@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {serchApiService} from '../util/searchApiService';
+import AddressList from './AddressList';
 
 class MainContent extends Component{
     constructor() {
@@ -11,18 +12,21 @@ class MainContent extends Component{
         let searchTerm = e.target.value;
         console.log(e.target.value);
         let res = await serchApiService.GetAdress(searchTerm);
-        console.log(res.data);
         this.setState({data:res.data});
     }
+    componentDidUpdate(prevProps, prevState){
+
+    }
     render(){
+        const {oneProp, searchboxLabel} = this.props;
         return (<main>
+            {searchboxLabel}
             <input
             placeholder="Search for..."
          ref={input => this.search = input}
           className="searchBox" onChange={this.getData}></input>
-           
             <div className="result">
-            Result:{this.state.data && JSON.stringify(this.state.data)}
+            {this.state.data && <AddressList addList={this.state.data}/>}
             </div>
             </main>);
     }

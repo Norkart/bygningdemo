@@ -13,7 +13,7 @@ class App extends Component {
        <ContentWrapper>
        <Header></Header>   
        <Sidebar></Sidebar>
-       <MainContent></MainContent>
+       <MainContent oneProp={{name:'myProp'}} searchboxLabel="Søk på gateadresse:" ></MainContent>
        <Footer></Footer>
        </ContentWrapper>
       </div>

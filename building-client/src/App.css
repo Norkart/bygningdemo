@@ -47,6 +47,23 @@
 .App-link {
   color: #61dafb;
 }
+.addresslist ul{
+  list-style: none;
+}
+.buildinglist ul{
+  list-style: none;
+}
+.addresslist ul li p{
+  margin:10px;
+}
+.hide{
+  display:none;
+}
+.buildingProperties{
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 10px;
+}
 
 @keyframes App-logo-spin {
   from {
