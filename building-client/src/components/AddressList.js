@@ -4,7 +4,7 @@ import { buildingApiService } from '../util/buildingApiService';
 class AddressList extends Component{
     constructor() {
         super();
-        this.state={buildinglist:null,postnumber:null};
+        this.state={buildinglist:null,postnumber:null,rosdata:null};
         this.onClick = this.onClick.bind(this);
     };
     
@@ -18,6 +18,8 @@ class AddressList extends Component{
         this.setState({buildinglist:res.data});
         let details=this.props.addList.SearchResults.find(x=>x.Id===id);
         this.setState({postnumber:details.Source.PostNummer});
+        let t=this.props.addList;
+        debugger;
     }
     render(){
         return(
@@ -30,7 +32,6 @@ class AddressList extends Component{
     AddressTextList(addList) {
      
       console.log("postnummer:"+addList.SearchResults.PostNummer);
-      debugger;
         const listItems = addList.SearchResults.map((item, i) =>
           <li key={i}><p onClick={(e) =>this.onClick(item.Id)}>{item.Text}</p></li>
         );

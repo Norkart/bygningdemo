@@ -48,12 +48,11 @@ class BuildingList extends Component{
         { return Object.keys(value).map((detailKey) => this.createDetailRow(detailKey,value[detailKey], index+detailKey))}
     }
     BuildingTextList(building,postnumber) {
-        console.log("postnumber in building component:"+postnumber);
         const listItems = building.Bygninger.map((item, i) =>
           <li key={i}><p onClick={(e) =>this.GetDetail(item.Id)}>{item.MatrikkelData.Bygningstype}</p></li>
         );
         return(
-               <div><div><p>Post Nummer:</p>{postnumber}</div><div><ul>{listItems}</ul></div></div> 
+               <div className="building"><div ><p>Post Nummer:{postnumber}</p></div><div ><ul>{listItems}</ul></div></div> 
         );
       }
 }

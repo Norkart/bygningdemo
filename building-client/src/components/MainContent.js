@@ -10,7 +10,6 @@ class MainContent extends Component{
     }
     async getData(e){
         let searchTerm = e.target.value;
-        console.log(e.target.value);
         let res = await serchApiService.GetAdress(searchTerm);
         this.setState({data:res.data});
     }

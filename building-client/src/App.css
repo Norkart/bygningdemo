@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  height: 100%;
 }
 
 .App-logo {
@@ -42,10 +43,14 @@
     "header header"
     "sidebar main"
     "footer footer";
-  grid-gap: .75em;
+  grid-gap: .01em;
 }
 .App-link {
   color: #61dafb;
+}
+.buildinglist{
+  height: 100vh;
+  
 }
 .addresslist ul{
   list-style: none;
@@ -63,6 +68,12 @@
   display: grid;
   grid-template-columns: auto auto;
   grid-gap: 10px;
+}
+.building{
+  border:1px solid red;
+}
+.infoHeader{
+  align-content: center
 }
 
 @keyframes App-logo-spin {
