@@ -7,29 +7,41 @@ class BuildingList extends Component{
         this.state={'detail':null}
         this.GetDetail=this.GetDetail.bind(this);
     }
+    componentDidUpdate(prevProps){
+       
+        if(JSON.stringify(prevProps.building)!==JSON.stringify(this.props.building)){
+            console.log(this.props.building)
+            this.setState({detail:null});
+        }
+    }
     render(){
         return(
             <div className="buildinglist">
                 <h1>Bygningsinformasjon</h1>
                 <div style={{display:'Grid',gridTemplateColumns:'500px auto',textAlign:'left'}}>
-                <div className="buildingProperties">
-                <div>Postnummer:{this.props.postnummer && this.props.postnummer}</div>
-                <div>Poststed:{this.props.postalArea && this.props.postalArea}</div>
-                <div>AvstandBrannstasjon:{this.props.rosdata && this.props.rosdata.AvstandBrannstasjon}</div>
-                <div>Flom:{this.props.rosdata && this.props.rosdata.Flom}</div>
-                <div>Fredabygg:{this.props.rosdata && this.props.rosdata.Fredabygg}</div>
-                <div>Kraftledning:{this.props.rosdata && this.props.rosdata.Kraftledning}</div>
-                <div>Kvikkleire:{this.props.rosdata && this.props.rosdata.Kvikkleire}</div>
-                <div>Kyst:{this.props.rosdata && this.props.rosdata.Kyst}</div>
-                <div>Snoskred:{this.props.rosdata && this.props.rosdata.Snoskred}</div>
-                <div>Steinsprang:{this.props.rosdata && this.props.rosdata.Steinsprang}</div>
-                {this.state.detail && this.createBuildingDetails(this.state.detail)}
+                    <div className="buildingProperties">
+                       
+                        <div className="textstyle">Postnummer:{this.props.postnummer && this.props.postnummer}</div>
+                        <div className="textstyle" >Poststed:{this.props.postalArea && this.props.postalArea}</div>
+                        <div className="textstyle" >AvstandBrannstasjon:{this.props.rosdata && this.props.rosdata.AvstandBrannstasjon}</div>
+                        <div className="textstyle" >Flom:{this.props.rosdata && this.props.rosdata.Flom}</div>
+                        <div className="textstyle" >Fredabygg:{this.props.rosdata && this.props.rosdata.Fredabygg}</div>
+                        <div className="textstyle" >Kraftledning:{this.props.rosdata && this.props.rosdata.Kraftledning}</div>
+                        <div className="textstyle">Kvikkleire:{this.props.rosdata && this.props.rosdata.Kvikkleire}</div>
+                        <div className="textstyle">Kyst:{this.props.rosdata && this.props.rosdata.Kyst}</div>
+                        <div className="textstyle">Snoskred:{this.props.rosdata && this.props.rosdata.Snoskred}</div>
+                        <div className="textstyle">Steinsprang:{this.props.rosdata && this.props.rosdata.Steinsprang}</div>
+                        
+                        
+                        {this.state.detail && this.createBuildingDetails(this.state.detail)}
+                    </div>
+                
                 </div>
                 <div>
                 {this.BuildingTextList(this.props.building)}
                 </div>
                 </div>
-            </div>
+           
         );
     }
    

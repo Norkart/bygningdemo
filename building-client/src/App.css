@@ -19,6 +19,12 @@
   height: 40vmin;
   pointer-events: none;
 }
+.textstyle{
+  font-weight: bold;
+  padding:1px;
+  
+  
+}
 
 .App-header {
   background-color: var(--norkart-hvit);
@@ -87,6 +93,7 @@ margin-left: 5px;
   display: grid;
   grid-template-columns: 200px auto;
   text-align: left;
+  
 }
 .building{
   border:1px solid red;
