@@ -10,9 +10,22 @@ class BuildingList extends Component{
     render(){
         return(
             <div className="buildinglist">
-                <h1>Building list </h1>
-                {this.BuildingTextList(this.props.building,this.props.postnummer)}
+                <h1>Bygningsinformasjon</h1>
+                <div style={{display:'Grid',gridTemplateColumns:'500px auto',textAlign:'left'}}>
+                <div className="buildingProperties">
+                <div>Postnummer:{this.props.postnummer && this.props.postnummer}</div>
+                <div>Poststed:{this.props.postalArea && this.props.postalArea}</div>
                 {this.state.detail && this.createBuildingDetails(this.state.detail)}
+                </div>
+                <div>
+                {this.BuildingTextList(this.props.building)}
+                </div>
+                
+                </div>
+               
+               
+                
+                
             </div>
         );
     }
@@ -25,13 +38,14 @@ class BuildingList extends Component{
     }
     createBuildingDetails(details){
         
-        return <div className="buildingProperties">
+        return <React.Fragment>
         {
             this.createDetailRow2(details)
         }
-     </div>
+        </React.Fragment>
     }
     createDetailRow2(details){
+        debugger;
         return <React.Fragment>
             <div>ID:</div><div>{details.Id}</div>
             <div>Bygningsnummer:</div><div>{details.Bygningsnummer}</div>
@@ -47,12 +61,14 @@ class BuildingList extends Component{
         else
         { return Object.keys(value).map((detailKey) => this.createDetailRow(detailKey,value[detailKey], index+detailKey))}
     }
-    BuildingTextList(building,postnumber) {
+    BuildingTextList(building) {
         const listItems = building.Bygninger.map((item, i) =>
-          <li key={i}><p onClick={(e) =>this.GetDetail(item.Id)}>{item.MatrikkelData.Bygningstype}</p></li>
+          <li key={i} className="clickable"><span onClick={(e) =>this.GetDetail(item.Id)}>{item.MatrikkelData.Bygningstype}</span></li>
         );
         return(
-               <div className="building"><div ><p>Post Nummer:{postnumber}</p></div><div ><ul>{listItems}</ul></div></div> 
+            <React.Fragment>
+            <div><ul style={{margin:'0px',padding:'0px'}}>{listItems}</ul></div>
+            </React.Fragment>
         );
       }
 }

@@ -24,6 +24,9 @@
   grid-area: header;
 
 }
+.clickable{
+  cursor: pointer;
+}
 .sidebar{
   border: 1px solid red;
   
@@ -66,8 +69,8 @@
 }
 .buildingProperties{
   display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 10px;
+  grid-template-columns: 200px auto;
+  text-align: left;
 }
 .building{
   border:1px solid red;

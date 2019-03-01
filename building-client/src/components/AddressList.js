@@ -4,7 +4,12 @@ import { buildingApiService } from '../util/buildingApiService';
 class AddressList extends Component{
     constructor() {
         super();
-        this.state={buildinglist:null,postnumber:null,rosdata:null};
+        this.state={
+          buildinglist:null,
+          postnumber:null,
+          postalArea:null,
+          rosData: null,
+        };
         this.onClick = this.onClick.bind(this);
     };
     
@@ -14,12 +19,15 @@ class AddressList extends Component{
     async getBuildingData(id){
         console.log(id);
         let res = await buildingApiService.GetBuilding(id);
-        console.log(res);
-        this.setState({buildinglist:res.data});
+
         let details=this.props.addList.SearchResults.find(x=>x.Id===id);
-        this.setState({postnumber:details.Source.PostNummer});
-        let t=this.props.addList;
         debugger;
+        this.setState({
+          buildinglist:res.data,
+          rosData: res.data ? res.data.RosData : null,
+          postnumber:details.Source.PostNummer,
+          postalArea:details.Source.PostSted});
+        
     }
     render(){
         return(
@@ -33,13 +41,14 @@ class AddressList extends Component{
      
       console.log("postnummer:"+addList.SearchResults.PostNummer);
         const listItems = addList.SearchResults.map((item, i) =>
-          <li key={i}><p onClick={(e) =>this.onClick(item.Id)}>{item.Text}</p></li>
+          <li key={i} className={'clickable'}><p onClick={(e) =>this.onClick(item.Id)}>{item.Text}</p></li>
         );
+    
         return (
           <main>
           <ul>{listItems}</ul>
           <div className="result">
-            {this.state.buildinglist && <BuildingList postnummer={this.state.postnumber} building={this.state.buildinglist}/>}
+            {this.state.buildinglist && <BuildingList postnummer={this.state.postnumber} postalArea={this.state.postalArea} building={this.state.buildinglist}/>}
           </div>
           </main>
         );
