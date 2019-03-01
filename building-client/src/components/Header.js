@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-
+import norkartlogo from '../images/Norkartlogo.PNG';
 
 class Header extends Component{
     constructor() {
@@ -7,7 +7,8 @@ class Header extends Component{
     }
 
     render(){
-        return (<div className="header"><h1>This is header</h1></div>);
+        
+        return (<div className="header"> <img src={norkartlogo} alt="logo" id="norkartlogo" /></div>);
     }
 
 }
