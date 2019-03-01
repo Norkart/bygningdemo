@@ -15,29 +15,31 @@ class BuildingList extends Component{
                 <div className="buildingProperties">
                 <div>Postnummer:{this.props.postnummer && this.props.postnummer}</div>
                 <div>Poststed:{this.props.postalArea && this.props.postalArea}</div>
+                <div>AvstandBrannstasjon:{this.props.rosdata && this.props.rosdata.AvstandBrannstasjon}</div>
+                <div>Flom:{this.props.rosdata && this.props.rosdata.Flom}</div>
+                <div>Fredabygg:{this.props.rosdata && this.props.rosdata.Fredabygg}</div>
+                <div>Kraftledning:{this.props.rosdata && this.props.rosdata.Kraftledning}</div>
+                <div>Kvikkleire:{this.props.rosdata && this.props.rosdata.Kvikkleire}</div>
+                <div>Kyst:{this.props.rosdata && this.props.rosdata.Kyst}</div>
+                <div>Snoskred:{this.props.rosdata && this.props.rosdata.Snoskred}</div>
+                <div>Steinsprang:{this.props.rosdata && this.props.rosdata.Steinsprang}</div>
                 {this.state.detail && this.createBuildingDetails(this.state.detail)}
                 </div>
                 <div>
                 {this.BuildingTextList(this.props.building)}
                 </div>
-                
                 </div>
-               
-               
-                
-                
             </div>
         );
     }
-    
+   
     GetDetail(Id){
-        let t=this.props.building;
+        
         let details=this.props.building.Bygninger.find(x=>x.Id===Id);
         if(details)
         this.setState({detail:details});
     }
     createBuildingDetails(details){
-        
         return <React.Fragment>
         {
             this.createDetailRow2(details)
@@ -45,20 +47,6 @@ class BuildingList extends Component{
         </React.Fragment>
     }
     createDetailRow2(details){
-        debugger;
-        /*ByggAreal:
-AntallEtasjer: 3
-Areal2D: 0
-Areal3D: 0
-ArealVegg: 0
-Bygningsnummer: "152913052"
-HelningMax: 0
-HelningMiddel: 0
-HoydeVeggMax: 0
-HoydeVeggMiddel: 0
-Taktype: "Saltak"
-VerandaAntall: 1
-VerandaAreal: 13.81*/
         return <React.Fragment>
             <div>ID:</div><div>{details.Id}</div>
             <div>Bygningsnummer:</div><div>{details.Bygningsnummer}</div>
@@ -66,6 +54,18 @@ VerandaAreal: 13.81*/
             <div>Bygningstype:</div><div>{details.MatrikkelData.Bygningstype}</div>
             <div>Harheis:</div><div>{details.MatrikkelData.Harheis}</div>
             <div>Naringsgruppe:</div><div>{details.MatrikkelData.Naringsgruppe}</div>
+            <div>AntallEtasjer:</div><div>{details.ByggAreal.AntallEtasjer}</div>
+            <div>Areal2D:</div><div>{details.ByggAreal.Areal2D}</div>
+            <div>Areal3D:</div><div>{details.ByggAreal.Areal3D}</div>
+            <div>ArealVegg:</div><div>{details.ByggAreal.ArealVegg}</div>
+            <div>Bygningsnummer:</div><div>{details.ByggAreal.Bygningsnummer}</div>
+            <div>HelningMax:</div><div>{details.ByggAreal.HelningMax}</div>
+            <div>HelningMiddel:</div><div>{details.ByggAreal.HelningMiddel}</div>
+            <div>HoydeVeggMax:</div><div>{details.ByggAreal.HoydeVeggMax}</div>
+            <div>HoydeVeggMiddel:</div><div>{details.ByggAreal.HoydeVeggMiddel}</div>
+            <div>Taktype:</div><div>{details.ByggAreal.Taktype}</div>
+            <div>VerandaAntall:</div><div>{details.ByggAreal.VerandaAntall}</div>
+            <div>VerandaAreal:</div><div>{details.ByggAreal.VerandaAreal}</div>
         </React.Fragment>
     }
     createDetailRow(propName, value, index){

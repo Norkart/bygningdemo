@@ -21,7 +21,6 @@ class AddressList extends Component{
         let res = await buildingApiService.GetBuilding(id);
 
         let details=this.props.addList.SearchResults.find(x=>x.Id===id);
-        debugger;
         this.setState({
           buildinglist:res.data,
           rosData: res.data ? res.data.RosData : null,
@@ -48,7 +47,7 @@ class AddressList extends Component{
           <main>
           <ul>{listItems}</ul>
           <div className="result">
-            {this.state.buildinglist && <BuildingList postnummer={this.state.postnumber} postalArea={this.state.postalArea} building={this.state.buildinglist}/>}
+            {this.state.buildinglist && <BuildingList rosdata={this.state.rosData} postnummer={this.state.postnumber} postalArea={this.state.postalArea} building={this.state.buildinglist}/>}
           </div>
           </main>
         );
