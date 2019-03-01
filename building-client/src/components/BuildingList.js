@@ -10,9 +10,22 @@ class BuildingList extends Component{
     render(){
         return(
             <div className="buildinglist">
-                <h1>Building list </h1>
-                {this.BuildingTextList(this.props.building,this.props.postnummer, this.props.postalArea)}
+                <h1>Bygningsinformasjon</h1>
+                <div style={{display:'Grid',gridTemplateColumns:'auto 200px'}}>
+                <div className="buildingProperties">
+                <div>Postnummer:{this.props.postnummer && this.props.postnummer}</div>
+                <div>Poststed:{this.props.postalArea && this.props.postalArea}</div>
                 {this.state.detail && this.createBuildingDetails(this.state.detail)}
+                </div>
+                <div>
+                {this.BuildingTextList(this.props.building)}
+                </div>
+                
+                </div>
+               
+               
+                
+                
             </div>
         );
     }
@@ -25,11 +38,11 @@ class BuildingList extends Component{
     }
     createBuildingDetails(details){
         
-        return <div className="buildingProperties">
+        return <React.Fragment>
         {
             this.createDetailRow2(details)
         }
-     </div>
+        </React.Fragment>
     }
     createDetailRow2(details){
         return <React.Fragment>
@@ -47,15 +60,14 @@ class BuildingList extends Component{
         else
         { return Object.keys(value).map((detailKey) => this.createDetailRow(detailKey,value[detailKey], index+detailKey))}
     }
-    BuildingTextList(building,postnumber, postalArea) {
-        console.log("postnumber in building component:"+postnumber);
+    BuildingTextList(building) {
         const listItems = building.Bygninger.map((item, i) =>
-          <li key={i}><p onClick={(e) =>this.GetDetail(item.Id)}>{item.MatrikkelData.Bygningstype}</p></li>
+          <li key={i} className="clickable"><p onClick={(e) =>this.GetDetail(item.Id)}>{item.MatrikkelData.Bygningstype}</p></li>
         );
         return(
-               <div><div><p>Postnummer:</p>{postnumber}</div>
-               <div><p>Poststed:</p>{postalArea}</div>
-               <div><ul>{listItems}</ul></div></div> 
+            <React.Fragment>
+            <div><ul>{listItems}</ul></div>
+            </React.Fragment>
         );
       }
 }

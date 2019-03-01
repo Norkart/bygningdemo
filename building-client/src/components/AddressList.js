@@ -39,7 +39,7 @@ class AddressList extends Component{
       console.log("postnummer:"+addList.SearchResults.PostNummer);
 
         const listItems = addList.SearchResults.map((item, i) =>
-          <li key={i}><p onClick={(e) =>this.onClick(item.Id)}>{item.Text}</p></li>
+          <li key={i} className={'clickable'}><p onClick={(e) =>this.onClick(item.Id)}>{item.Text}</p></li>
         );
     
         return (
