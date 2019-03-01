@@ -11,7 +11,7 @@ class BuildingList extends Component{
         return(
             <div className="buildinglist">
                 <h1>Building list </h1>
-                {this.BuildingTextList(this.props.building,this.props.postnummer)}
+                {this.BuildingTextList(this.props.building,this.props.postnummer, this.props.postalArea)}
                 {this.state.detail && this.createBuildingDetails(this.state.detail)}
             </div>
         );
@@ -47,13 +47,15 @@ class BuildingList extends Component{
         else
         { return Object.keys(value).map((detailKey) => this.createDetailRow(detailKey,value[detailKey], index+detailKey))}
     }
-    BuildingTextList(building,postnumber) {
+    BuildingTextList(building,postnumber, postalArea) {
         console.log("postnumber in building component:"+postnumber);
         const listItems = building.Bygninger.map((item, i) =>
           <li key={i}><p onClick={(e) =>this.GetDetail(item.Id)}>{item.MatrikkelData.Bygningstype}</p></li>
         );
         return(
-               <div><div><p>Post Nummer:</p>{postnumber}</div><div><ul>{listItems}</ul></div></div> 
+               <div><div><p>Postnummer:</p>{postnumber}</div>
+               <div><p>Poststed:</p>{postalArea}</div>
+               <div><ul>{listItems}</ul></div></div> 
         );
       }
 }
