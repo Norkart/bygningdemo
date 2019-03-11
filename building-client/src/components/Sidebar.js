@@ -1,14 +1,17 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
+import ApiKeyInput from './ApiKeyInput';
 
+class Sidebar extends Component {
+  constructor() {
+    super();
+  }
 
-class Sidebar extends Component{
-    constructor() {
-        super();
-    }
-
-    render(){
-        return (<div className="sidebar"><h1>This is sidebar</h1></div>);
-    }
-
+  render() {
+    return (
+      <div className="sidebar">
+        <ApiKeyInput />
+      </div>
+    );
+  }
 }
 export default Sidebar;

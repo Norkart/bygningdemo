@@ -19,7 +19,6 @@ class AddressList extends Component{
     async getBuildingData(id){
         console.log(id);
         let res = await buildingApiService.GetBuilding(id);
-
         let details=this.props.addList.SearchResults.find(x=>x.Id===id);
         this.setState({
           buildinglist:res.data,
