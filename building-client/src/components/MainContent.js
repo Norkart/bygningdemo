@@ -13,6 +13,7 @@ class MainContent extends Component {
     let res = await serchApiService.GetAdress(searchTerm);
     this.setState({ data: res.data });
   }
+  
   componentDidUpdate(prevProps, prevState) {}
   render() {
     const { searchboxLabel } = this.props;

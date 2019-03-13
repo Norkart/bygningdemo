@@ -5,6 +5,18 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faWarehouse } from '@fortawesome/free-solid-svg-icons'
+import { faTrain } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faBuilding);
+library.add(faHome);
+library.add(faWarehouse);
+library.add(faTrain);
+
+
 
 class App extends Component {
   render() {

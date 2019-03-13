@@ -7,12 +7,12 @@ const BASE_URL =
 const resource =
   getSetting("REACT_APP_BYGNING_BYGNINGER_BY_ADRESSE_ID_SEARCH") ||
   "/bygninger/byadresse/";
-
+const matrikkelResource = "/bygninger/bymatrikkelenhet/";
 export const buildingApiService = {
-  async GetBuilding(address, key) {
+  async GetBuilding(address) {
     let headers = {
       Accept: "application/json; charset=utf-8",
-      "X-WAAPI-Token": sessionStorage.getItem('apiKey')
+      "X-WAAPI-Token": sessionStorage.getItem("apiKey")
     };
     let client = createNewClient(headers);
     try {
@@ -24,6 +24,30 @@ export const buildingApiService = {
           "&IncludeRosData=" +
           encodeURIComponent("true") +
           "&IncludeFkbData=false&IncludeMatrikkelData=" +
+          encodeURIComponent("true")
+      );
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async GetMatrikkelData(matrikkelenhetid) {
+    let headers = {
+      Accept: "application/json; charset=utf-8",
+      "X-WAAPI-Token": sessionStorage.getItem("apiKey")
+    };
+    let client = createNewClient(headers);
+    try {
+      let res = await client.get(
+        matrikkelResource +
+          encodeURIComponent(matrikkelenhetid) +
+          "?IncludeByggAreal=" +
+          encodeURIComponent("true") +
+          "&IncludeRosData=" +
+          encodeURIComponent("false") +
+          "&IncludeFkbData=" +
+          encodeURIComponent("false") +
+          "&IncludeMatrikkelData=" +
           encodeURIComponent("true")
       );
       return res;

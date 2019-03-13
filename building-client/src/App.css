@@ -22,8 +22,6 @@
 .textstyle{
   font-weight: bold;
   padding:1px;
-  
-  
 }
 
 .App-header {
@@ -36,7 +34,6 @@
   color: white;
 }
 .header{
-  border: 1px solid red;
   grid-area: header;
 
 }
@@ -44,14 +41,12 @@
   cursor: pointer;
 }
 .sidebar{
-  border: 1px solid red;
   
 }
 h1,p{
   color:var(--norkart-sort);
 }
 .footer{
-  border: 1px solid red;
   grid-area: footer;
 }
 footer > *{
