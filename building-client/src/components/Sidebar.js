@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ApiKeyInput from './ApiKeyInput';
+
 
 class Sidebar extends Component {
   constructor() {
@@ -7,9 +7,10 @@ class Sidebar extends Component {
   }
 
   render() {
+    const { children } = this.props;
     return (
-      <div className="sidebar">
-        <ApiKeyInput />
+      <div className={`${this.props.classNames}`}>
+      {children}
       </div>
     );
   }

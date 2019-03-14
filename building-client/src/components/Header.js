@@ -8,10 +8,11 @@ class Header extends Component {
 
   render() {
     return (
-      <div className="header">
-        {" "}
-        <img src={norkartlogo} alt="logo" id="norkartlogo" />
-      </div>
+      <React.Fragment>
+        <div className="header">
+          <img src={norkartlogo} alt="logo" id="norkartlogo" />
+        </div>
+      </React.Fragment>
     );
   }
 }

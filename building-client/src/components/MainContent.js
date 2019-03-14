@@ -32,7 +32,7 @@ class MainContent extends Component {
                     className="searchBox"
                     onChange={this.getData}
                   />
-                  <div className="result">
+                  <div>
                     {this.state.data && (
                       <AddressList addList={this.state.data} />
                     )}
@@ -41,7 +41,7 @@ class MainContent extends Component {
               )
             );
           }}
-        </AppContext.Consumer>{" "}
+        </AppContext.Consumer>
       </main>
     );
   }

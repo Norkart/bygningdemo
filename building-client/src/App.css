@@ -6,8 +6,8 @@
 --norkart-orange: #f5ad4a;
 --norkart-hvit: #f6f6f6;
 --navbar-height: 58px;
---header-background-height: 65vh;
---footer-height: 60px;
+--header-background-height: 100%;
+--footer-height: 100%;
 }
 .App {
   text-align: center;
@@ -23,31 +23,37 @@
   font-weight: bold;
   padding:1px;
 }
-
-.App-header {
-  background-color: var(--norkart-hvit);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+input{
+  padding: 0px 0px 0px 0px;
+  min-width: 20px;
+  width: 100%;
+  max-width: 150px;
 }
+
 .header{
   grid-area: header;
-
+}
+.headerLeft{
+  grid-area: headerLeft;
 }
 .clickable{
   cursor: pointer;
 }
-.sidebar{
-  
+.sidebarLeft{
+  grid-area: sidebarLeft;
+}
+.sidebarRight{
+  grid-area: sidebarRight;
 }
 h1,p{
   color:var(--norkart-sort);
 }
 .footer{
   grid-area: footer;
+  height: var(--footer-height);
+}
+.footerLeft{
+  grid-area: footerLeft;
 }
 footer > *{
   margin: 0px;
@@ -55,22 +61,25 @@ footer > *{
 }
 .contentWrapper{
   width: 100vw;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   background-color:#f6f6f6;
   display: grid;
-  grid-template-rows: 1fr 4fr 1fr;
-  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 8fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr;
   grid-template-areas: 
-    "header header"
-    "sidebar main"
-    "footer footer";
-  grid-gap: .01em;
+    "header header header"
+    "sidebarLeft main sidebarRight"
+    "footer footer footer";
 }
 .App-link {
   color: #61dafb;
 }
 .buildinglist{
 margin-left: 5px;
+display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 .addresslist ul{
   list-style: none;
@@ -96,15 +105,4 @@ margin-left: 5px;
 #norkartlogo{
   width: 200px;
 }
-.infoHeader{
-  align-content: center
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

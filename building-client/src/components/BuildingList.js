@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { serchApiService } from "../util/searchApiService";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class BuildingList extends Component {
@@ -18,10 +17,9 @@ class BuildingList extends Component {
     }
   }
   render() {
-      console.log(this.props.rosdata);
     return (
       <div className="buildinglist">
-        <h1>Bygningsinformasjon</h1>
+        <h1>AdresseInformasjon</h1>
         <div
           style={{
             display: "Grid",
@@ -30,41 +28,43 @@ class BuildingList extends Component {
           }}
         >
           <div className="buildingProperties">
-            <div className="textstyle">
-              Postnummer:{this.props.postnummer && this.props.postnummer}
+          <div>AdresseInfo</div>
+            <div>
+              Postnummer:<span className="textstyle">{this.props.postalCode && this.props.postalCode}</span>
             </div>
-            <div className="textstyle">
-              Poststed:{this.props.postalArea && this.props.postalArea}
+            <div>
+              Poststed:<span className="textstyle">{this.props.postalArea && this.props.postalArea}</span>
             </div>
-            <div className="textstyle">
+            <div>
               AvstandBrannstasjon:
-              {this.props.rosdata && this.props.rosdata.avstandBrannstasjon}
+              <span className="textstyle">{this.props.rosData && this.props.rosData.AvstandBrannstasjon}</span>
             </div>
-            <div className="textstyle">
-              Flom:{this.props.rosdata && this.props.rosdata.flom}
+            <div>
+              Flom:<span className="textstyle">{this.props.rosData && this.props.rosData.Flom}</span>
             </div>
-            <div className="textstyle">
-              Fredabygg:{this.props.rosdata && JSON.stringify(this.props.rosdata.fredabygg)}
+            <div>
+              Fredabygg:{this.props.rosData && JSON.stringify(this.props.rosData.Fredabygg)}
             </div>
-            <div className="textstyle">
+            <div>
               Kraftledning:
-              {this.props.rosdata && this.props.rosdata.kraftledning}
+              {this.props.rosData && this.props.rosData.Kraftledning}
             </div>
-            <div className="textstyle">
-              Kvikkleire:{this.props.rosdata && this.props.rosdata.kvikkleire}
+            <div>
+              Kvikkleire:{this.props.rosData && this.props.rosData.Kvikkleire}
             </div>
-            <div className="textstyle">
-              Kyst:{this.props.rosdata && this.props.rosdata.kyst}
+            <div>
+              Kyst:{this.props.rosData && this.props.rosData.Kyst}
             </div>
-            <div className="textstyle">
-              Snoskred:{this.props.rosdata && JSON.stringify(this.props.rosdata.snoskred)}
+            <div>
+              Snoskred:{this.props.rosData && JSON.stringify(this.props.rosData.Snoskred)}
             </div>
-            <div className="textstyle">
-              Steinsprang:{this.props.rosdata && JSON.stringify(this.props.rosdata.steinsprang)}
+            <div>
+              Steinsprang:{this.props.rosData && JSON.stringify(this.props.rosData.Steinsprang)}
             </div>
 
             {this.state.detail && this.createBuildingDetails(this.state.detail)}
           </div>
+        
           <div>{this.BuildingTextList(this.props.building)}</div>
         </div>
       </div>
@@ -72,27 +72,27 @@ class BuildingList extends Component {
   }
 
   GetDetail(Id) {
-    let details = this.props.building.bygninger.find(x => x.Id === Id);
+    let details = this.props.building.Bygninger.find(x => x.Id === Id);
     if (details) this.setState({ detail: details });
   }
   createBuildingDetails(details) {
     return <React.Fragment>{this.createDetailRow2(details)}</React.Fragment>;
   }
   createDetailRow2(details) {
-    const byggAreal = details.byggAreal;
-    console.log(byggAreal);
+    const byggAreal = details.ByggAreal;
+
     return (
       <React.Fragment>
         <div>ID:</div>
         <div>{details.Id}</div>
         <div>Bygningsnummer:</div>
-        <div>{details.bygningsnummer}</div>
+        <div>{details.Bygningsnummer}</div>
         <div>Bygningstatus:</div>
-        <div>{details.matrikkelData.bygningstatus}</div>
+        <div>{details.MatrikkelData.Bygningstatus}</div>
         <div>Bygningstype:</div>
-        <div>{details.matrikkelData.bygningstype}</div>
+        <div>{details.MatrikkelData.Bygningstype}</div>
         <div>Naringsgruppe:</div>
-        <div>{details.matrikkelData.naringsGruppe}</div>
+        <div>{details.MatrikkelData.Naringsgruppe}</div>
         {byggAreal && this.addBuildingArea(byggAreal)}
       </React.Fragment>
     );
@@ -152,14 +152,14 @@ class BuildingList extends Component {
     }
   }
   BuildingTextList(building) {
-    const listItems = building.bygninger.map((item, index) => {
+    const listItems = building.Bygninger.map((item, index) => {
       return (
         <li key={index} className="clickable">
           <div onClick={e => this.GetDetail(item.Id)}>
             <FontAwesomeIcon
-              icon={this.getFontIcon(item.matrikkelData.bygningstype)}
+              icon={this.getFontIcon(item.MatrikkelData.Bygningstype)}
             />
-            <div>{item.matrikkelData.bygningstype}</div>
+            <div>{item.MatrikkelData.Bygningstype}</div>
           </div>
         </li>
       );

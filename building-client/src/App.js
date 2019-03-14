@@ -5,6 +5,7 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ApiKeyInput from './components/ApiKeyInput';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBuilding } from '@fortawesome/free-solid-svg-icons'
 import { faHome } from '@fortawesome/free-solid-svg-icons'
@@ -24,11 +25,13 @@ class App extends Component {
       <div className="App">
           <ContentWrapper>
             <Header />
-            <Sidebar />
+            <Sidebar classNames={"sidebarLeft"}>
+            <ApiKeyInput />
+            </Sidebar>
             <MainContent
-              oneProp={{ name: "myProp" }}
               searchboxLabel="Søk på gateadresse:"
             />
+            <Sidebar classNames={"sidebarRight"}/>
             <Footer />
           </ContentWrapper>
       </div>
