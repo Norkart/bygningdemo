@@ -5,137 +5,64 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class BuildingList extends Component {
   constructor() {
     super();
-    this.state = { detail: null };
+    this.state = {selectedBuilding: null };
     this.GetDetail = this.GetDetail.bind(this);
   }
   componentDidUpdate(prevProps) {
     if (
       JSON.stringify(prevProps.building) !== JSON.stringify(this.props.building)
     ) {
-      console.log(this.props.building);
       this.setState({ detail: null });
     }
   }
   render() {
+    const { adressInfo, rosData, postalCode, postalArea } = this.props;
+ 
     return (
       <div className="buildinglist">
         <h1>AdresseInformasjon</h1>
-        <div
-          style={{
-            display: "Grid",
-            gridTemplateColumns: "500px auto",
-            textAlign: "left"
-          }}
-        >
+        <div className="adressInfo">
           <div className="buildingProperties">
-          <div>AdresseInfo</div>
-            <div>
-              Postnummer:<span className="textstyle">{this.props.postalCode && this.props.postalCode}</span>
-            </div>
-            <div>
-              Poststed:<span className="textstyle">{this.props.postalArea && this.props.postalArea}</span>
-            </div>
-            <div>
-              AvstandBrannstasjon:
-              <span className="textstyle">{this.props.rosData && this.props.rosData.AvstandBrannstasjon}</span>
-            </div>
-            <div>
-              Flom:<span className="textstyle">{this.props.rosData && this.props.rosData.Flom}</span>
-            </div>
-            <div>
-              Fredabygg:{this.props.rosData && JSON.stringify(this.props.rosData.Fredabygg)}
-            </div>
-            <div>
-              Kraftledning:
-              {this.props.rosData && this.props.rosData.Kraftledning}
-            </div>
-            <div>
-              Kvikkleire:{this.props.rosData && this.props.rosData.Kvikkleire}
-            </div>
-            <div>
-              Kyst:{this.props.rosData && this.props.rosData.Kyst}
-            </div>
-            <div>
-              Snoskred:{this.props.rosData && JSON.stringify(this.props.rosData.Snoskred)}
-            </div>
-            <div>
-              Steinsprang:{this.props.rosData && JSON.stringify(this.props.rosData.Steinsprang)}
-            </div>
-
-            {this.state.detail && this.createBuildingDetails(this.state.detail)}
+            {this.createRow("Postnummer", postalCode, 'Postnummer')}
+            {this.createRow("Poststed", postalArea, "Poststed")}
+            {this.printData(rosData, 'RosData')}
+            {this.state.selectedBuilding && this.printData(this.state.selectedBuilding, 'ByggInfo')}
           </div>
-        
-          <div>{this.BuildingTextList(this.props.building)}</div>
+          <div>{this.BuildingTextList(adressInfo, adressInfo)}</div>
         </div>
       </div>
     );
   }
+  printData(data, header) {
+    if (!data) return null;
+    let keys = Object.keys(data);
+    let html = [];
 
-  GetDetail(Id) {
-    let details = this.props.building.Bygninger.find(x => x.Id === Id);
-    if (details) this.setState({ detail: details });
-  }
-  createBuildingDetails(details) {
-    return <React.Fragment>{this.createDetailRow2(details)}</React.Fragment>;
-  }
-  createDetailRow2(details) {
-    const byggAreal = details.ByggAreal;
-
-    return (
-      <React.Fragment>
-        <div>ID:</div>
-        <div>{details.Id}</div>
-        <div>Bygningsnummer:</div>
-        <div>{details.Bygningsnummer}</div>
-        <div>Bygningstatus:</div>
-        <div>{details.MatrikkelData.Bygningstatus}</div>
-        <div>Bygningstype:</div>
-        <div>{details.MatrikkelData.Bygningstype}</div>
-        <div>Naringsgruppe:</div>
-        <div>{details.MatrikkelData.Naringsgruppe}</div>
-        {byggAreal && this.addBuildingArea(byggAreal)}
-      </React.Fragment>
-    );
-  }
-  addBuildingArea(byggAreal) {
-    return (
-      <React.Fragment>
-        {this.addAllValues(byggAreal)
-        /*this.addValue('AntallEtasjer:', byggAreal.AntallEtasjer)*/
-        }
-      </React.Fragment>
-    );
-  }
-  addAllValues(obj) {
-    let keys = Object.keys(obj);
-    var htmlList = [];
     for (let index = 0; index < keys.length; index++) {
-      const key = keys[index];
-      htmlList.push(this.addValue(key, obj[key]));
+      const keyValue = keys[index];
+      if (data.hasOwnProperty(keyValue)) {
+        const element = data[keyValue];
+        if(element !== null && (typeof element === 'object')){
+            let subData = this.printData(element, keyValue);
+            html.push(...subData);
+        }else{
+            html.push(this.createRow(keyValue, element,header+index));
+        }        
+      }
     }
-    return htmlList;
+    return html;
   }
-  addValue(label, value) {
+  createRow(keyValue, value, index) {
     return (
-      <React.Fragment>
-        <div>{label}</div>
+      <React.Fragment key={index}>
+        <div className="appBold">{keyValue}{": "}</div>
         <div>{value != null ? value : "Ingen verdi"}</div>
       </React.Fragment>
     );
   }
-  createDetailRow(propName, value, index) {
-    if (!(Object.getPrototypeOf(value) === Object.prototype))
-      return (
-        <React.Fragment key={index}>
-          <div>{propName}</div>
-          <div>{value}</div>
-        </React.Fragment>
-      );
-    else {
-      return Object.keys(value).map(detailKey =>
-        this.createDetailRow(detailKey, value[detailKey], index + detailKey)
-      );
-    }
+
+  GetDetail(selectedBuilding) {
+    if (selectedBuilding) this.setState({ selectedBuilding: selectedBuilding });
   }
 
   getFontIcon(bygningstype) {
@@ -151,11 +78,11 @@ class BuildingList extends Component {
         return "home";
     }
   }
-  BuildingTextList(building) {
+  BuildingTextList(building, adressInfo) {
     const listItems = building.Bygninger.map((item, index) => {
       return (
         <li key={index} className="clickable">
-          <div onClick={e => this.GetDetail(item.Id)}>
+          <div onClick={e => this.GetDetail(item)}>
             <FontAwesomeIcon
               icon={this.getFontIcon(item.MatrikkelData.Bygningstype)}
             />

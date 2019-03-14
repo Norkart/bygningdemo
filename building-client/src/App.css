@@ -95,12 +95,19 @@ display: flex;
 }
 .buildingProperties{
   display: grid;
-  grid-template-columns: 200px auto;
+  grid-template-columns: auto auto;
   text-align: left;
-  
 }
-.building{
-  border:1px solid red;
+.adressInfo{
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 5em;
+
+  justify-content: center;
+  width: 100%;
+}
+.appBold{
+  font-weight: 600;
 }
 #norkartlogo{
   width: 200px;

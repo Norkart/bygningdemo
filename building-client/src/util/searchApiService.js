@@ -14,7 +14,7 @@ export const serchApiService = {
       Accept: "application/json; charset=utf-8",
       "X-WAAPI-Token": sessionStorage.getItem('apiKey')
     };
-    console.log(BASE_URL);
+    
     let client = createNewClient(headers);
     try {
       let res = await client.get(

@@ -22,7 +22,6 @@ class ApiKeyInput extends Component {
     return (
       <AppContext.Consumer>
         {({ state, setApiKey }) => { 
-          console.log(state);
           return (
           
           <div>
