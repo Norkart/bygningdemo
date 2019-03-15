@@ -9,23 +9,24 @@ const resource =
   "/bygninger/byadresse/";
 const matrikkelResource = "/bygninger/bymatrikkelenhet/";
 export const buildingApiService = {
-  async GetBuilding(address) {
+  async GetBuilding(address, params) {
     let headers = {
       Accept: "application/json; charset=utf-8",
       "X-WAAPI-Token": sessionStorage.getItem("apiKey")
     };
     let client = createNewClient(headers);
     try {
-      let res = await client.get(
-        resource +
-          encodeURIComponent(address) +
+      let base = resource + encodeURIComponent(address);
+      let url = params
+        ? base + params
+        : base +
           "?IncludeByggAreal=" +
           encodeURIComponent("true") +
           "&IncludeRosData=" +
           encodeURIComponent("true") +
           "&IncludeFkbData=false&IncludeMatrikkelData=" +
-          encodeURIComponent("true")
-      );
+          encodeURIComponent("true");
+      let res = await client.get(url);
       return res;
     } catch (error) {
       console.log(error);

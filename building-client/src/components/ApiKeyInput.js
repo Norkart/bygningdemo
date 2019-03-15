@@ -27,7 +27,7 @@ class ApiKeyInput extends Component {
           <div>
             <label htmlFor="apiKeyInput">ApiKey:</label>
             <input
-            value={state.apiKey ? state.apiKey : undefined}
+            value={state.apiKey ? state.apiKey : ''}
               name="apiKeyInput"
               type="text"
               placeholder="Enter key..."
