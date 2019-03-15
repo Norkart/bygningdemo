@@ -48,17 +48,21 @@ input{
 h1,p{
   color:var(--norkart-sort);
 }
+.footer > *{
+  margin: 0px;
+  padding: 0px;
+}
 .footer{
   grid-area: footer;
   height: var(--footer-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .footerLeft{
   grid-area: footerLeft;
 }
-footer > *{
-  margin: 0px;
-  padding: 0px;
-}
+
 .contentWrapper{
   width: 100vw;
   height: 100%;
@@ -105,6 +109,17 @@ display: flex;
 
   justify-content: center;
   width: 100%;
+}
+.headerRow{
+  grid-column-start: 1; 
+  grid-column-end: 3;
+
+}
+.gridHeaderText{
+  text-decoration: underline;
+  padding-bottom: 0.3em;
+  padding-top: 0.1em;
+  font-size: 1.3em;
 }
 .appBold{
   font-weight: 600;

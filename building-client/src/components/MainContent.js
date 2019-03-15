@@ -8,12 +8,19 @@ class MainContent extends Component {
     this.state = { data: null };
     this.getData = this.getData.bind(this);
   }
-  async getData(e) {
+  async getData(e, setFeedback) {
     let searchTerm = e.target.value;
-    let res = await serchApiService.GetAdress(searchTerm);
-    this.setState({ data: res.data });
+    if (searchTerm && searchTerm.length > 0) {
+      let res = await serchApiService.GetAdress(searchTerm);
+      if (res && res.data) {
+        this.setState({ data: res.data });
+        setFeedback(null);
+      } else {
+        setFeedback("Fikk ikke noe data");
+      }
+    }
   }
-  
+
   componentDidUpdate(prevProps, prevState) {}
   render() {
     const { searchboxLabel } = this.props;
@@ -21,7 +28,7 @@ class MainContent extends Component {
     return (
       <main>
         <AppContext.Consumer>
-          {({ state, setApiKey }) => {
+          {({ state, setFeedback }) => {
             return (
               state.isValidKey && (
                 <div>
@@ -30,8 +37,9 @@ class MainContent extends Component {
                     placeholder="Søk etter gateadresse ..."
                     ref={input => (this.search = input)}
                     className="searchBox"
-                    onChange={this.getData}
+                    onChange={e => this.getData(e, setFeedback)}
                   />
+                  {state.feedback && <div> {state.feedback}</div>}
                   <div>
                     {this.state.data && (
                       <AddressList addList={this.state.data} />

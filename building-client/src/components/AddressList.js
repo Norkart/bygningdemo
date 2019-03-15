@@ -8,9 +8,11 @@ class AddressList extends Component {
       adressInfo: null,
       postnumber: null,
       postalArea: null,
-      rosData: null
+      rosData: null,
+      feedback: null,
+      buildingName: null
     };
-    this.onClick = this.onClick.bind(this);
+    this.getBuildingData = this.getBuildingData.bind(this);
   }
 
   onClick = id => {
@@ -18,14 +20,18 @@ class AddressList extends Component {
   };
   async getBuildingData(id) {
     let res = await buildingApiService.GetBuilding(id);
-    let details = this.props.addList.SearchResults.find(x => x.Id === id);
+    if (res) {
+      let details = this.props.addList.SearchResults.find(x => x.Id === id);
 
-    this.setState({
-      adressInfo: res.data,
-      rosData: res.data != null ? res.data.RosData : null,
-      postnumber: details.Source.PostNummer,
-      postalArea: details.Source.PostSted
-    });
+      this.setState({
+        adressInfo: res.data,
+        rosData: res.data != null ? res.data.RosData : null,
+        postnumber: details.Source.PostNummer,
+        postalArea: details.Source.PostSted,
+        buildingName: details.Source.Text,
+        feedback: null
+      });
+    }
   }
   render() {
     return (
@@ -49,6 +55,7 @@ class AddressList extends Component {
           {this.state.adressInfo && (
             <BuildingList
               rosData={this.state.rosData}
+              buildingName={this.state.buildingName}
               postalCode={this.state.postnumber}
               postalArea={this.state.postalArea}
               adressInfo={this.state.adressInfo}
