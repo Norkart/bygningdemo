@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 
 export const AppContext = React.createContext();
+
 class ContentWrapper extends Component {
   constructor() {
     super();
     this.state = {
       isValidKey: false,
       apiKey: null,
-      feedback: null
+      feedback: null, 
+      renderComponentName:'position'
     };
     this.setApiKey = this.setApiKey.bind(this);
     this.setFeedback = this.setFeedback.bind(this);
+    this.setRenderComponent = this.setRenderComponent.bind(this);
+
   }
   componentDidMount() {
     let key = sessionStorage.getItem("apiKey");
@@ -31,6 +35,11 @@ class ContentWrapper extends Component {
       feedback: message
     });
   }
+  setRenderComponent(componentName) {
+    this.setState({
+      renderComponentName: componentName
+    });
+  }
 
   isValidKey(key) {
     if (key && key.length > 5) return true;
@@ -45,7 +54,8 @@ class ContentWrapper extends Component {
         value={{
           state: this.state,
           setApiKey: this.setApiKey,
-          setFeedback: this.setFeedback
+          setFeedback: this.setFeedback,
+          setRenderComponent: this.setRenderComponent
         }}
       >
         <div className="contentWrapper">{children}</div>

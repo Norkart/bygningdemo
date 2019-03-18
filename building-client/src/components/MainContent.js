@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import getSetting from "../util/getSetting";
 import BuildingByPosition from "./BuildingByPosition";
+import BuildingByGeometry from "./BuildingByGeometry";
+import { AppContext } from "./ContentWrapper";
+
 const BASE_URL =
   getSetting("REACT_APP_BYGNING_BYGNINGER_BY_ADRESSE_ID_KEY") ||
-  "//www.webatlas.no/WAAPI-BygningStaged/bygninger/byadresse/{adressId}";
+  "//www.webatlas.no/WAAPI-BygningStaged";
 
 class MainContent extends Component {
   constructor() {
@@ -37,17 +40,46 @@ class MainContent extends Component {
     let newUrl = oldParams.replace(results[0], newParam);
     return newUrl;
   }
-
-  componentDidUpdate(prevProps, prevState) {}
+  renderComponent(defaultComponent, state, setFeedback) {
+    switch (defaultComponent) {
+      case "geometry":
+        return (
+          <BuildingByGeometry
+            params={this.state.params}
+            url={this.state.url + "/bygninger/bygeometry/{geometry}"}
+            createUrl={this.createUrl}
+          />
+        );
+      default:
+        return (
+          <BuildingByPosition
+            params={this.state.params}
+            url={this.state.url + "/bygninger/byadresse/{adressId}"}
+            createUrl={this.createUrl}
+            setFeedback={setFeedback}
+            feedback={state.feedback}
+            searchboxLabel="Søk på gateadresse:"
+          />
+        );
+    }
+  }
   render() {
     return (
       <main>
-        <BuildingByPosition
-          params={this.state.params}
-          url={this.state.url}
-          createUrl={this.createUrl}
-          searchboxLabel="Søk på gateadresse:"
-        />
+        <div>
+          <AppContext.Consumer>
+            {({ state, setFeedback }) => {
+              return (
+                state.isValidKey &&
+                this.renderComponent(
+                  state.renderComponentName,
+                  state,
+                  setFeedback
+                )
+              );
+            }}
+          </AppContext.Consumer>
+        </div>
       </main>
     );
   }

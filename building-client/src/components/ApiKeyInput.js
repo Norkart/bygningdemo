@@ -2,22 +2,13 @@ import React, { Component } from "react";
 import { AppContext } from "./ContentWrapper";
 
 class ApiKeyInput extends Component {
-  constructor() {
-    super();
-    /*  this.state={
-      apiKey:null
-    };
-    this.setKeyState= this.setKeyState.bind(this); */
-  }
 
   onChange(e, setApiKey) {
     let key = e.target.value;
       setApiKey(key);
   }
 
-  /*async setKeyState(key){
-    this.setState({ApiKey:key});
-  } */
+
   render() {
     return (
       <AppContext.Consumer>

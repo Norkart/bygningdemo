@@ -5,6 +5,7 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Menu from "./components/Menu";
 import ApiKeyInput from "./components/ApiKeyInput";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -55,6 +56,7 @@ class App extends Component {
           <Header />
           <Sidebar classNames={"sidebarLeft"}>
             <ApiKeyInput />
+            <Menu></Menu>
           </Sidebar>
           <MainContent  />
           <Sidebar classNames={"sidebarRight"} />

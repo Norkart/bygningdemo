@@ -24,41 +24,31 @@ class BuildingByPosition extends Component {
   }
 
   render() {
-    const { searchboxLabel, params, url, createUrl } = this.props;
+    const {
+      searchboxLabel,
+      params,
+      url,
+      createUrl,
+      setFeedback,
+      feedback
+    } = this.props;
     return (
       <React.Fragment>
-        <AppContext.Consumer>
-          {({ state, setFeedback }) => {
-            return (
-              state.isValidKey && (
-                <React.Fragment>
-                  <UrlComponent
-                    url={url}
-                    params={params}
-                    onChange={createUrl}
-                  />
-                  <div>
-                    {searchboxLabel}
-                    <input
-                      placeholder="Søk etter gateadresse ..."
-                      className="searchBox"
-                      onChange={e => this.getData(e, setFeedback)}
-                    />
-                    {state.feedback && <div> {state.feedback}</div>}
-                    <div>
-                      {this.state.data && (
-                        <AddressList
-                          addList={this.state.data}
-                          params={params}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </React.Fragment>
-              )
-            );
-          }}
-        </AppContext.Consumer>
+        <UrlComponent url={url} params={params} onChange={createUrl} />
+        <div>
+          {searchboxLabel}
+          <input
+            placeholder="Søk etter gateadresse ..."
+            className="searchBox"
+            onChange={e => this.getData(e, setFeedback)}
+          />
+          {feedback && <div> {feedback}</div>}
+          <div>
+            {this.state.data && (
+              <AddressList addList={this.state.data} params={params} />
+            )}
+          </div>
+        </div>
       </React.Fragment>
     );
   }
