@@ -8,7 +8,6 @@ class UrlComponent extends Component {
       selectIds: [
         "IncludeRosData",
         "IncludeByggAreal",
-        "IncludeRosData",
         "IncludeBygningStatuser",
         "IncludeEtasjer",
         "IncludeMatrikkelData",
@@ -22,6 +21,7 @@ class UrlComponent extends Component {
       <React.Fragment>
         {this.state.selectIds.map(selectId => (
           <SelectComponent
+            key={selectId}
             selectId={selectId}
             onChange={e => this.props.onChange(e)}
           />

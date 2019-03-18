@@ -22,7 +22,8 @@ class BuildingList extends Component {
       rosData,
       buildingName,
       postalCode,
-      postalArea
+      postalArea,
+      adressId
     } = this.props;
 
     return (
@@ -31,6 +32,7 @@ class BuildingList extends Component {
         <div className="adressInfo">
           <div className="buildingProperties">
             {this.createRow("Adresse", buildingName, "Adresse")}
+            {this.createRow("AdressId", adressId, "AdressId")}
             {this.createRow("Postnummer", postalCode, "Postnummer")}
             {this.createRow("Poststed", postalArea, "Poststed")}
             {this.printData(rosData, "RosData")}
@@ -75,9 +77,9 @@ class BuildingList extends Component {
       </React.Fragment>
     );
   }
-  createHeaderRow(header, index) {
+  createHeaderRow(header) {
     return (
-      <React.Fragment key={index}>
+      <React.Fragment key={header}>
         <div className="headerRow gridHeaderText">{header}</div>
       </React.Fragment>
     );

@@ -56,7 +56,7 @@ class App extends Component {
           <Sidebar classNames={"sidebarLeft"}>
             <ApiKeyInput />
           </Sidebar>
-          <MainContent searchboxLabel="Søk på gateadresse:" />
+          <MainContent  />
           <Sidebar classNames={"sidebarRight"} />
           <Footer />
         </ContentWrapper>

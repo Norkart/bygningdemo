@@ -10,6 +10,7 @@ class AddressList extends Component {
       postalArea: null,
       rosData: null,
       feedback: null,
+      adressId:null,
       buildingName: null
     };
     this.getBuildingData = this.getBuildingData.bind(this);
@@ -19,7 +20,7 @@ class AddressList extends Component {
     this.getBuildingData(id);
   };
   async getBuildingData(id) {
-    let res = await buildingApiService.GetBuilding(id);
+    let res = await buildingApiService.GetBuilding(id, this.props.params);
     if (res) {
       let details = this.props.addList.SearchResults.find(x => x.Id === id);
 
@@ -28,6 +29,7 @@ class AddressList extends Component {
         rosData: res.data != null ? res.data.RosData : null,
         postnumber: details.Source.PostNummer,
         postalArea: details.Source.PostSted,
+        adressId:details.Id,
         buildingName: details.Source.Text,
         feedback: null
       });
@@ -59,6 +61,7 @@ class AddressList extends Component {
               postalCode={this.state.postnumber}
               postalArea={this.state.postalArea}
               adressInfo={this.state.adressInfo}
+              adressId={this.state.adressId}
             />
           )}
         </div>

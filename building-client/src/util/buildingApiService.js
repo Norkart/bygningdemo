@@ -17,6 +17,7 @@ export const buildingApiService = {
     let client = createNewClient(headers);
     try {
       let base = resource + encodeURIComponent(address);
+      console.log(params)
       let url = params
         ? base + params
         : base +
