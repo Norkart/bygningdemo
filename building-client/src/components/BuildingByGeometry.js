@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AppContext } from "./ContentWrapper";
+import Map from "./Map";
 import UrlComponent from "./UrlComponent";
 class BuildingByGeometry extends Component {
   render() {
@@ -7,6 +7,7 @@ class BuildingByGeometry extends Component {
     return (
       <React.Fragment>
         <UrlComponent url={url} params={params} onChange={createUrl} />
+        <Map></Map>
       </React.Fragment>
     );
   }
