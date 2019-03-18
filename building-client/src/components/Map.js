@@ -27,8 +27,7 @@ L.tileLayer(
     maxZoom: 18
   }).addTo(map);
 
-// add a marker in the given location
-L.marker(center).addTo(map);
+
 
 // Initialise the FeatureGroup to store editable layers
 let editableLayers = new L.FeatureGroup();
@@ -55,7 +54,7 @@ let drawPluginOptions = {
     },
   edit: {
     featureGroup: editableLayers, //REQUIRED!!
-    remove: false
+    remove: true
   }
 };
 
@@ -68,6 +67,9 @@ map.on(L.Draw.Event.CREATED, (e) => {
 
 
   editableLayers.addLayer(layer);
+});
+map.on(L.Draw.Event.DELETESTART, (e) => {
+  console.log('delete')
 });
 }
 
