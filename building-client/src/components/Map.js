@@ -36,7 +36,7 @@ class Map extends Component {
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
-      maxZoom: 30
+      maxZoom: 19
     }).addTo(map);
     // Initialise the FeatureGroup to store editable layers
     let editableLayers = new L.FeatureGroup();
@@ -73,13 +73,15 @@ class Map extends Component {
     map.on(L.Draw.Event.CREATED, async e => {
       let type = e.layerType,
         layer = e.layer;
-        layer.setStyle({fillColor: this.randomColor(1)});
+
       if (type === "polygon") {
+        layer.setStyle({fillColor: this.randomColor(1)});
         let wkt_poly = this.leafletLayerToWkt(layer);
         console.log(wkt_poly);
         let res = await buildingApiService.GetByGeom(wkt_poly);
         if (res && res.data && res.data.Bygninger) {
           let buildings = res.data.Bygninger;
+         
           for (let index = 0; index < buildings.length; index++) {
             const element = buildings[index];
             if (element.MatrikkelData && element.MatrikkelData.Posisjon) {
@@ -106,6 +108,7 @@ class Map extends Component {
           }
           layer.bindPopup(`Antall bygg i sone:${buildings.length}`);
         }
+       
         editableLayers.addLayer(layer);
         map.fitBounds(layer.getBounds());
       }
