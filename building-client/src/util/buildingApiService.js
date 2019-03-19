@@ -63,7 +63,7 @@ export const buildingApiService = {
 const createNewClient = headers => {
   return Axios.create({
     baseURL:BASE_URL,
-    timeout: 5000,
+    timeout: 10000,
     headers: headers,
     responseType: "json"
   });

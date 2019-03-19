@@ -4,6 +4,7 @@ import "leaflet-draw";
 import { buildingApiService } from "../util/buildingApiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactDOMServer from 'react-dom/server';
+import {getFontIcon} from '../util/helper';
 
 class Map extends Component {
   constructor() {
@@ -82,7 +83,6 @@ class Map extends Component {
           for (let index = 0; index < buildings.length; index++) {
             const element = buildings[index];
             if (element.MatrikkelData && element.MatrikkelData.Posisjon) {
-              
                let marker = L.marker(
                 [
                   element.MatrikkelData.Posisjon.Y,
@@ -93,7 +93,7 @@ class Map extends Component {
                     iconSize:0,
                     className:'',
                     html:`${ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon
-                      icon={this.getFontIcon(element.MatrikkelData.Bygningstype)}
+                      icon={getFontIcon(element.MatrikkelData.Bygningstype)}
                       size="lg"
                     />)}`+
                     `<div>${element.MatrikkelData.Bygningstype}</div>`
@@ -101,58 +101,21 @@ class Map extends Component {
                 }
               ).bindPopup(`Lat:${element.MatrikkelData.Posisjon.Y} Lng:${element.MatrikkelData.Posisjon.X}`);
               editableLayers.addLayer(marker)
+
             }
           }
           layer.bindPopup(`Antall bygg i sone:${buildings.length}`);
         }
+        editableLayers.addLayer(layer);
+        map.fitBounds(layer.getBounds());
       }
-      editableLayers.addLayer(layer);
-      map.fitBounds(layer.getBounds());
+     
     });
-    map.on(L.Draw.Event.DELETESTART, e => {
-      console.log("delete");
+    map.on(L.Draw.Event.DELETED, e => {
+
     });
   }
-  getFontIcon(bygningstype) {
-    switch (bygningstype) {
-      case "Rekkehus":
-        return "home";
-      case "Jernbane- og T-banestasjon":
-        return "train";
-      case "Garasjeuthus anneks til bolig":
-        return "warehouse";
-      case "Kontor- og adm.bygning rådhus":
-        return "landmark";
-      case "Hotellbygning":
-        return "hotel";
-      case "Annen kontorbygning":
-        return "briefcase";
-      case "Bo- og behandlingssenter":
-        return "clinic-medical";
-      case "Sykehjem":
-        return "clinic-medical";
-      case "Sykehus":
-        return "hospital-alt";
-      case "Lagerhall":
-        return "th";
-      case "Barnehage":
-        return "school";
-      case "Butikk/forretningsbygning":
-        return "store-alt";
-      case "Kirkesogn":
-        return "place-of-worship";
-      case "Kloster":
-        return "place-of-worship";
-      case "Kirke kapell":
-        return "place-of-worship";
-      case "Monument":
-        return "monument";
-      default:
-        if (bygningstype.toLowerCase().includes("bolig")) return "home";
-        else if (bygningstype.toLowerCase().includes("skole")) return "school";
-        return "building";
-    }
-  }
+ 
   leafletLayerToWkt(layer) {
     let lng,
       lat,
