@@ -17,7 +17,7 @@ export const buildingApiService = {
     let client = createNewClient(headers);
     try {
       let base = resource + encodeURIComponent(address);
-      console.log(params)
+      console.log(params);
       let url = params
         ? base + params
         : base +
@@ -33,24 +33,25 @@ export const buildingApiService = {
       console.log(error);
     }
   },
-  async GetMatrikkelData(matrikkelenhetid) {
+  async GetByGeom(wktGeom) {
     let headers = {
       Accept: "application/json; charset=utf-8",
       "X-WAAPI-Token": sessionStorage.getItem("apiKey")
     };
     let client = createNewClient(headers);
     try {
-      let res = await client.get(
-        matrikkelResource +
-          encodeURIComponent(matrikkelenhetid) +
-          "?IncludeByggAreal=" +
-          encodeURIComponent("true") +
-          "&IncludeRosData=" +
-          encodeURIComponent("false") +
-          "&IncludeFkbData=" +
-          encodeURIComponent("false") +
-          "&IncludeMatrikkelData=" +
-          encodeURIComponent("true")
+      let obj = {
+        Geometry:wktGeom,
+        IncludeBygningStatuser: false,
+        IncludeEtasjer: false,
+        IncludeMatrikkelData: true,
+        IncludeFkbData: false,
+        GeometryTextFormat: "WKT",
+        SRS: "4326"
+      };
+      let res = await client.post(
+        "/bygninger/bygeometry",
+        obj
       );
       return res;
     } catch (error) {
@@ -61,7 +62,7 @@ export const buildingApiService = {
 
 const createNewClient = headers => {
   return Axios.create({
-    baseURL: BASE_URL,
+    baseURL:BASE_URL,
     timeout: 5000,
     headers: headers,
     responseType: "json"

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import AddressList from "./AddressList";
 import UrlComponent from "./UrlComponent";
-import { AppContext } from "./ContentWrapper";
 import { serchApiService } from "../util/searchApiService";
 
 class BuildingByPosition extends Component {
