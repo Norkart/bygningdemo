@@ -3,8 +3,8 @@ import L from "leaflet";
 import "leaflet-draw";
 import { buildingApiService } from "../util/buildingApiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ReactDOMServer from 'react-dom/server';
-import {getFontIcon} from '../util/helper';
+import ReactDOMServer from "react-dom/server";
+import { getFontIcon } from "../util/helper";
 
 class Map extends Component {
   constructor() {
@@ -15,15 +15,19 @@ class Map extends Component {
 
     this.createMap();
   }
-  randomChannel(brightness){
-    let r = 255-brightness;
-    let n = 0|((Math.random() * r) + brightness);
+  randomChannel(brightness) {
+    let r = 255 - brightness;
+    let n = 0 | (Math.random() * r + brightness);
     let s = n.toString(16);
-    return (s.length===1) ? '0'+s : s;
+    return s.length === 1 ? "0" + s : s;
   }
-   randomColor(brightness){
-    
-    return '#' + this.randomChannel(brightness) + this.randomChannel(brightness) + this.randomChannel(brightness);
+  randomColor(brightness) {
+    return (
+      "#" +
+      this.randomChannel(brightness) +
+      this.randomChannel(brightness) +
+      this.randomChannel(brightness)
+    );
   }
   createMap() {
     // center of the map
@@ -55,6 +59,7 @@ class Map extends Component {
             color: "#000000"
           }
         },
+        marker: false,
         // disable toolbar item by setting it to false
         polyline: false,
         circle: false, // Turns off this drawing tool
@@ -75,50 +80,61 @@ class Map extends Component {
         layer = e.layer;
 
       if (type === "polygon") {
-        layer.setStyle({fillColor: this.randomColor(1)});
+       // let markerLayer = new L.LayerGroup();
+        let polygonLayer = new L.LayerGroup();
+        layer.setStyle({ fillColor: this.randomColor(1) });
         let wkt_poly = this.leafletLayerToWkt(layer);
         console.log(wkt_poly);
         let res = await buildingApiService.GetByGeom(wkt_poly);
         if (res && res.data && res.data.Bygninger) {
           let buildings = res.data.Bygninger;
-         
+
           for (let index = 0; index < buildings.length; index++) {
             const element = buildings[index];
             if (element.MatrikkelData && element.MatrikkelData.Posisjon) {
-               let marker = L.marker(
+              let marker = L.marker(
                 [
                   element.MatrikkelData.Posisjon.Y,
                   element.MatrikkelData.Posisjon.X
                 ],
                 {
                   icon: new L.DivIcon({
-                    iconSize:0,
-                    className:'',
-                    html:`${ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon
-                      icon={getFontIcon(element.MatrikkelData.Bygningstype)}
-                      size="lg"
-                    />)}`+
-                    `<div>${element.MatrikkelData.Bygningstype}</div>`
+                    iconSize: 0,
+                    className: "",
+                    html:
+                      `${ReactDOMServer.renderToStaticMarkup(
+                        <FontAwesomeIcon
+                          icon={getFontIcon(element.MatrikkelData.Bygningstype)}
+                          size="lg"
+                        />
+                      )}` + `<div>${element.MatrikkelData.Bygningstype}</div>`
                   })
                 }
               ).bindPopup(`Lat:${element.MatrikkelData.Posisjon.Y} Lng:${element.MatrikkelData.Posisjon.X}`);
-              editableLayers.addLayer(marker)
-
+              editableLayers.addLayer(marker);
+            
             }
           }
-          layer.bindPopup(`Antall bygg i sone:${buildings.length}`);
+         layer.bindPopup(`Antall bygg i sone:${buildings.length}`);
         }
-       
+        //editableLayers.addLayer(polygonLayer);
+        //polygonLayer.addLayer(layer);
         editableLayers.addLayer(layer);
         map.fitBounds(layer.getBounds());
       }
-     
     });
-    map.on(L.Draw.Event.DELETED, e => {
+    map.on(L.Draw.Event.DELETED, e => {});
+    map.on(L.Draw.Event.EDITED, e => {
 
+      console.log(e);
+      editableLayers.removeLayer();
+    });
+    map.on(L.Draw.Event.EDITVERTEX, e => {
+
+      console.log(e);
     });
   }
- 
+
   leafletLayerToWkt(layer) {
     let lng,
       lat,

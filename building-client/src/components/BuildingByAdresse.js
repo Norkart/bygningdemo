@@ -3,7 +3,7 @@ import AddressList from "./AddressList";
 import UrlComponent from "./UrlComponent";
 import { serchApiService } from "../util/searchApiService";
 
-class BuildingByPosition extends Component {
+class BuildingByAdresse extends Component {
   constructor() {
     super();
     this.state = { data: null };
@@ -62,4 +62,4 @@ class BuildingByPosition extends Component {
     );
   }
 }
-export default BuildingByPosition;
+export default BuildingByAdresse;

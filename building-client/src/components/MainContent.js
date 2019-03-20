@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import getSetting from "../util/getSetting";
-import BuildingByPosition from "./BuildingByPosition";
+import BuildingByAdresse from "./BuildingByAdresse";
 import BuildingByGeometry from "./BuildingByGeometry";
 import { AppContext } from "./ContentWrapper";
 
@@ -57,7 +57,7 @@ class MainContent extends Component {
         );
       default:
         return (
-          <BuildingByPosition
+          <BuildingByAdresse
             params={this.state.params}
             url={this.state.url + "/bygninger/byadresse/{adressId}"}
             createUrl={this.createUrl}

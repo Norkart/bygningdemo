@@ -9,8 +9,8 @@ class Menu extends Component {
           return (
             state.isValidKey && (
               <div>
-                <button className={'pure-material-button-contained'} onClick={() => setRenderComponent("position")}>
-                  position
+                <button className={'pure-material-button-contained'} onClick={() => setRenderComponent("Adresse")}>
+                  Adresse
                 </button>
                 <button className={'pure-material-button-contained'} onClick={() => setRenderComponent("geometry")}>
                   geometry
