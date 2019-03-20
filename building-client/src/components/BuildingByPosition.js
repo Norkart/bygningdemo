@@ -33,14 +33,24 @@ class BuildingByPosition extends Component {
     } = this.props;
     return (
       <React.Fragment>
-        <UrlComponent url={url} params={params} onChange={createUrl} />
-        <div>
-          {searchboxLabel}
+        <UrlComponent url={url} selectIds={ [
+          "IncludeRosData",
+          "IncludeByggAreal",
+          "IncludeBygningStatuser",
+          "IncludeEtasjer",
+          "IncludeMatrikkelData",
+          "IncludeFkbData"
+        ]} params={params} onChange={createUrl} />
+        <div className={'search'}>
+        {searchboxLabel}
           <input
             placeholder="Søk etter gateadresse ..."
             className="searchBox"
             onChange={e => this.getData(e, setFeedback)}
           />
+        </div>
+        <div>
+          
           {feedback && <div> {feedback}</div>}
           <div>
             {this.state.data && (

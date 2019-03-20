@@ -3,10 +3,10 @@ import Map from "./Map";
 import UrlComponent from "./UrlComponent";
 class BuildingByGeometry extends Component {
   render() {
-    const { params, url, createUrl } = this.props;
+    const { url, createUrl } = this.props;
     return (
       <React.Fragment>
-        <UrlComponent url={url} params={params} onChange={createUrl} />
+        <UrlComponent url={url} params={[]} onChange={createUrl} />
         <Map></Map>
       </React.Fragment>
     );

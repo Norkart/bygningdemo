@@ -25,7 +25,9 @@ export const buildingApiService = {
           encodeURIComponent("true") +
           "&IncludeRosData=" +
           encodeURIComponent("true") +
-          "&IncludeFkbData=false&IncludeMatrikkelData=" +
+          "&IncludeFkbData=" +
+          encodeURIComponent("false") +
+          "&IncludeMatrikkelData=" +
           encodeURIComponent("true");
       let res = await client.get(url);
       return res;
@@ -41,7 +43,7 @@ export const buildingApiService = {
     let client = createNewClient(headers);
     try {
       let obj = {
-        Geometry:wktGeom,
+        Geometry: wktGeom,
         IncludeBygningStatuser: false,
         IncludeEtasjer: false,
         IncludeMatrikkelData: true,
@@ -49,10 +51,7 @@ export const buildingApiService = {
         GeometryTextFormat: "WKT",
         SRS: "4326"
       };
-      let res = await client.post(
-        "/bygninger/bygeometry",
-        obj
-      );
+      let res = await client.post("/bygninger/bygeometry", obj);
       return res;
     } catch (error) {
       console.log(error);
@@ -62,7 +61,7 @@ export const buildingApiService = {
 
 const createNewClient = headers => {
   return Axios.create({
-    baseURL:BASE_URL,
+    baseURL: BASE_URL,
     timeout: 10000,
     headers: headers,
     responseType: "json"

@@ -104,6 +104,14 @@ display: flex;
     align-items: center;
     flex-direction: column;
 }
+.search{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.addresslist{
+  text-align: center;
+}
 .addresslist ul{
   list-style: none;
 }

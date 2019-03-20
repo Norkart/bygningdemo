@@ -158,7 +158,7 @@ class Map extends Component {
   render() {
     return (
       <React.Fragment>
-        <div id="leafletmap" style={{ width: "80%", height: "500px" }} />
+        <div id="leafletmap" style={{ width: "100%", height: "500px" }} />
       </React.Fragment>
     );
   }

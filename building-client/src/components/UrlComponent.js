@@ -4,22 +4,12 @@ import SelectComponent from "./SelectComponent";
 class UrlComponent extends Component {
   constructor() {
     super();
-    this.state = {
-      selectIds: [
-        "IncludeRosData",
-        "IncludeByggAreal",
-        "IncludeBygningStatuser",
-        "IncludeEtasjer",
-        "IncludeMatrikkelData",
-        "IncludeFkbData"
-      ]
-    };
   }
 
   render() {
     return (
       <React.Fragment>
-        {this.state.selectIds.map(selectId => (
+        {this.props.selectIds && this.props.selectIds.map(selectId => (
           <SelectComponent
             key={selectId}
             selectId={selectId}
@@ -32,7 +22,8 @@ class UrlComponent extends Component {
             style={{
               padding: 10,
               backgroundColor: "lightgray",
-              marginBottom: 5
+              marginBottom: 5,
+              wordBreak:'break-all'
             }}
           >
             <div>

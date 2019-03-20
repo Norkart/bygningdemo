@@ -89,17 +89,24 @@ class BuildingList extends Component {
     if (selectedBuilding) this.setState({ selectedBuilding: selectedBuilding });
   }
 
- 
+ getBygningstype(item){
+  if(item)
+    if(item.MatrikkelData)
+      if(item.MatrikkelData.Bygningstype)
+        return item.MatrikkelData.Bygningstype;
+
+      return '';
+ }
   BuildingTextList(building) {
     const listItems = building.Bygninger.map((item, index) => {
       return (
         <li key={index} className="clickable">
           <div onClick={e => this.GetDetail(item)}>
             <FontAwesomeIcon
-              icon={getFontIcon(item.MatrikkelData.Bygningstype)}
+              icon={getFontIcon(this.getBygningstype(item))}
               size="3x"
             />
-            <div>{item.MatrikkelData ? item.MatrikkelData.Bygningstype : ''}</div>
+            <div>{this.getBygningstype(item)}</div>
           </div>
         </li>
       );

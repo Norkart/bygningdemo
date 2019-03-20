@@ -11,7 +11,12 @@ const BASE_URL =
 class MainContent extends Component {
   constructor() {
     super();
-    this.state = { data: null, url: BASE_URL, params: "" };
+    this.state = {
+      data: null,
+      url: BASE_URL,
+      params:
+        "?IncludeRosData=false&IncludeByggAreal=false&IncludeMatrikkelData=false&IncludeEtasjer=false&IncludeFkbData=false&IncludeBygningStatuser=false"
+    };
     this.createUrl = this.createUrl.bind(this);
   }
 
