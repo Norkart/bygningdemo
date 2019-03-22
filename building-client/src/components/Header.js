@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import norkartlogo from "../images/Norkartlogo.PNG";
 
 class Header extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
     return (
       <React.Fragment>

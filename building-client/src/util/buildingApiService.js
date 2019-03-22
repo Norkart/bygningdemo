@@ -2,12 +2,16 @@ import Axios from "axios";
 import getSetting from "./getSetting";
 
 const BASE_URL =
-  getSetting("REACT_APP_BYGNING_BYGNINGER_BY_ADRESSE_ID_KEY") ||
+  getSetting("REACT_APP_BYGNING_BYGNINGER_BASE_URL") ||
   "//www.webatlas.no/WAAPI-BygningStaged";
 const resource =
-  getSetting("REACT_APP_BYGNING_BYGNINGER_BY_ADRESSE_ID_SEARCH") ||
+  getSetting("REACT_APP_BYGNING_BYGNINGER_BY_ADRESSE") ||
   "/bygninger/byadresse/";
-const matrikkelResource = "/bygninger/bymatrikkelenhet/";
+
+  const geomResource =
+  getSetting("REACT_APP_BYGNING_BYGNINGER_BY_GEOMETRY") ||
+  "/bygninger/bygeometry";
+
 export const buildingApiService = {
   async GetBuilding(address, params) {
     let headers = {
@@ -51,7 +55,7 @@ export const buildingApiService = {
         GeometryTextFormat: "WKT",
         SRS: "4326"
       };
-      let res = await client.post("/bygninger/bygeometry", obj);
+      let res = await client.post(geomResource, obj);
       return res;
     } catch (error) {
       console.log(error);
