@@ -9,6 +9,13 @@ import { getFontIcon } from "../util/helper";
 class Map extends Component {
   constructor() {
     super();
+    this.state = {
+      isLoading: false
+    };
+    this.setLoadingState = this.setLoadingState.bind(this);
+  }
+  setLoadingState(isLoading) {
+    this.setState({ isLoading: isLoading });
   }
   componentDidMount() {
     // create map
@@ -80,7 +87,8 @@ class Map extends Component {
         layer = e.layer;
 
       if (type === "polygon") {
-       // let markerLayer = new L.LayerGroup();
+        this.setLoadingState(true);
+        // let markerLayer = new L.LayerGroup();
         let polygonLayer = new L.LayerGroup();
         layer.setStyle({ fillColor: this.randomColor(1) });
         let wkt_poly = this.leafletLayerToWkt(layer);
@@ -110,27 +118,29 @@ class Map extends Component {
                       )}` + `<div>${element.MatrikkelData.Bygningstype}</div>`
                   })
                 }
-              ).bindPopup(`Lat:${element.MatrikkelData.Posisjon.Y} Lng:${element.MatrikkelData.Posisjon.X}`);
+              ).bindPopup(
+                `Lat:${element.MatrikkelData.Posisjon.Y} Lng:${
+                  element.MatrikkelData.Posisjon.X
+                }`
+              );
               editableLayers.addLayer(marker);
-            
             }
           }
-         layer.bindPopup(`Antall bygg i sone:${buildings.length}`);
+          layer.bindPopup(`Antall bygg i sone:${buildings.length}`);
         }
         //editableLayers.addLayer(polygonLayer);
         //polygonLayer.addLayer(layer);
         editableLayers.addLayer(layer);
+        this.setLoadingState(false);
         map.fitBounds(layer.getBounds());
       }
     });
     map.on(L.Draw.Event.DELETED, e => {});
     map.on(L.Draw.Event.EDITED, e => {
-
       console.log(e);
       editableLayers.removeLayer();
     });
     map.on(L.Draw.Event.EDITVERTEX, e => {
-
       console.log(e);
     });
   }
@@ -174,7 +184,15 @@ class Map extends Component {
   render() {
     return (
       <React.Fragment>
-        <div id="leafletmap" style={{ width: "100%", height: "500px" }} />
+        {this.state.isLoading && (
+          <div id="overlay">
+            <div class="lds-ripple">
+              <div />
+              <div />
+            </div>
+          </div>
+        )}
+        <div id="leafletmap" style={{ width: "100%", height: "500px" }} />}
       </React.Fragment>
     );
   }
