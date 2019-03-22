@@ -69,7 +69,7 @@ class Map extends Component {
         marker: false,
         // disable toolbar item by setting it to false
         polyline: false,
-        circle: false, // Turns off this drawing tool
+        circle: true, // Turns off this drawing tool
         rectangle: false,
         circlemarker: false
       },
@@ -85,66 +85,92 @@ class Map extends Component {
     map.on(L.Draw.Event.CREATED, async e => {
       let type = e.layerType,
         layer = e.layer;
-
-      if (type === "polygon") {
         this.setLoadingState(true);
-        // let markerLayer = new L.LayerGroup();
-        let polygonLayer = new L.LayerGroup();
-        layer.setStyle({ fillColor: this.randomColor(1) });
-        let wkt_poly = this.leafletLayerToWkt(layer);
-        console.log(wkt_poly);
-        let res = await buildingApiService.GetByGeom(wkt_poly);
-        if (res && res.data && res.data.Bygninger) {
-          let buildings = res.data.Bygninger;
-
-          for (let index = 0; index < buildings.length; index++) {
-            const element = buildings[index];
-            if (element.MatrikkelData && element.MatrikkelData.Posisjon) {
-              let marker = L.marker(
-                [
-                  element.MatrikkelData.Posisjon.Y,
-                  element.MatrikkelData.Posisjon.X
-                ],
-                {
-                  icon: new L.DivIcon({
-                    iconSize: 0,
-                    className: "",
-                    html:
-                      `${ReactDOMServer.renderToStaticMarkup(
-                        <FontAwesomeIcon
-                          icon={getFontIcon(element.MatrikkelData.Bygningstype)}
-                          size="lg"
-                        />
-                      )}` + `<div>${element.MatrikkelData.Bygningstype}</div>`
-                  })
-                }
-              ).bindPopup(
-                `Lat:${element.MatrikkelData.Posisjon.Y} Lng:${
-                  element.MatrikkelData.Posisjon.X
-                }`
-              );
-              editableLayers.addLayer(marker);
-            }
-          }
-          layer.bindPopup(`Antall bygg i sone:${buildings.length}`);
-        }
-        //editableLayers.addLayer(polygonLayer);
-        //polygonLayer.addLayer(layer);
+      if (type === "polygon") {
+        await this.createPolygon(layer, editableLayers);
         editableLayers.addLayer(layer);
-        this.setLoadingState(false);
-        map.fitBounds(layer.getBounds());
       }
+      if (type === "circle") {
+        await this.createCircle(layer,editableLayers);
+      }
+      this.setLoadingState(false);
+      map.fitBounds(layer.getBounds());
     });
-    map.on(L.Draw.Event.DELETED, e => {});
+    map.on(L.Draw.Event.DELETED, e => {
+      console.log(e);
+      console.log(e.target);
+    });
+    map.on(L.Draw.Event.DELETESTART, e => {
+      console.log(e);
+    });
     map.on(L.Draw.Event.EDITED, e => {
       console.log(e);
-      editableLayers.removeLayer();
+      // editableLayers.removeLayer();
     });
     map.on(L.Draw.Event.EDITVERTEX, e => {
       console.log(e);
     });
   }
-
+  async createPolygon(polygon, editableLayers) {
+    // let markerLayer = new L.LayerGroup();
+    // let polygonLayer = new L.LayerGroup();
+    let wkt_poly = this.leafletLayerToWkt(polygon);
+    let res = await buildingApiService.GetByGeom(wkt_poly);
+    this.setRandomColorOnLayer(polygon);
+    if (res && res.data && res.data.Bygninger) {
+      let buildings = res.data.Bygninger;
+      this.addMarkers(buildings, editableLayers);
+      polygon.bindPopup(`Antall bygg i sone:${buildings.length}`);
+    }
+  }
+  async createCircle(circle,editableLayers){
+    let latlng=circle.getLatLng();
+    console.log(latlng);
+    this.setLoadingState(true);
+    this.setRandomColorOnLayer(circle);
+    let res = await buildingApiService.GetByPosition(latlng.lat,latlng.lng, circle.options.radius);
+    console.log(res);
+    if (res && res.data && res.data.Bygninger) {
+      let buildings = res.data.Bygninger;
+      this.addMarkers(buildings, editableLayers);
+      circle.bindPopup(`Antall bygg i sone:${buildings.length}`);
+    }
+    editableLayers.addLayer(circle);
+  }
+  setRandomColorOnLayer(layer) {
+    layer.setStyle({ fillColor: this.randomColor(1) });
+  }
+  addMarkers(buildings, editableLayers) {
+    for (let index = 0; index < buildings.length; index++) {
+      const element = buildings[index];
+      if (element.MatrikkelData && element.MatrikkelData.Posisjon) {
+        let marker = this.createMarker(element);
+        editableLayers.addLayer(marker);
+      }
+    }
+  }
+  createMarker(element) {
+    return L.marker(
+      [element.MatrikkelData.Posisjon.Y, element.MatrikkelData.Posisjon.X],
+      {
+        icon: new L.DivIcon({
+          iconSize: 0,
+          className: "",
+          html:
+            `${ReactDOMServer.renderToStaticMarkup(
+              <FontAwesomeIcon
+                icon={getFontIcon(element.MatrikkelData.Bygningstype)}
+                size="lg"
+              />
+            )}` + `<div>${element.MatrikkelData.Bygningstype}</div>`
+        })
+      }
+    ).bindPopup(
+      `Lat:${element.MatrikkelData.Posisjon.Y} Lng:${
+        element.MatrikkelData.Posisjon.X
+      }`
+    );
+  }
   leafletLayerToWkt(layer) {
     let lng,
       lat,
@@ -186,13 +212,13 @@ class Map extends Component {
       <React.Fragment>
         {this.state.isLoading && (
           <div id="overlay">
-            <div class="lds-ripple">
+            <div className="lds-ripple">
               <div />
               <div />
             </div>
           </div>
         )}
-        <div id="leafletmap" style={{ width: "100%", height: "500px" }} />}
+        <div id="leafletmap" style={{ width: "100%", height: "500px" }} />
       </React.Fragment>
     );
   }

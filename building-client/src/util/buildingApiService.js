@@ -60,6 +60,21 @@ export const buildingApiService = {
     } catch (error) {
       console.log(error);
     }
+  },
+  async GetByPosition(x,y, r) {
+    let headers = {
+      Accept: "application/json; charset=utf-8",
+      "X-WAAPI-Token": sessionStorage.getItem("apiKey")
+    };
+    let client = createNewClient(headers);
+    try {
+      let url = `/bygninger/byposition?X=${y}&Y=${x}&MaxRadius=${r}&SRS=4326&Limit=30000`;
+      console.log(url);
+      let res = await client.get(url);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 
