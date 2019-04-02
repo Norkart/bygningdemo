@@ -6,7 +6,7 @@ const BASE_URL =
   "//www.webatlas.no/WAAPI-FritekstSok/";
 const resource =
   getSetting("REACT_APP_SEARCH_SEARCH") ||
-  "search/matrikkel/adresse/gateadresse";
+  "/search/kommunecustom";
 
 export const serchApiService = {
   async GetAdress(searchTerm) {
@@ -18,7 +18,7 @@ export const serchApiService = {
     let client = createNewClient(headers);
     try {
       let res = await client.get(
-        resource + "?Query=" + encodeURIComponent(searchTerm)
+        resource + "?Query=" + encodeURIComponent(searchTerm) +"&Targets=gateadresse"
       );
       return res;
     } catch (error) {
